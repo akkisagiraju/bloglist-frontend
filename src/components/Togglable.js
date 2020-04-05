@@ -23,7 +23,7 @@ const Togglable = React.forwardRef((props, ref) => {
       <div style={hideWhenVisible}>
         <button onClick={toggleVisiblity}>{props.label}</button>
         {props.items
-          .sort((a, b) => a.likes - b.likes)
+          .sort((a, b) => b.likes - a.likes)
           .map((item) => (
             <Blog
               key={item.id}

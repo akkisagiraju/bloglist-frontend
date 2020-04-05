@@ -63,5 +63,27 @@ describe('Blog app', () => {
       cy.contains('View').click();
       cy.contains('like').click();
     });
+
+    it('displays blogs sorted by likes', () => {
+      cy.createBlog({
+        title: 'Second blog',
+        author: 'Akhil',
+        url: 'asdfa.com',
+        likes: 15,
+      });
+      cy.createBlog({
+        title: 'Third blog',
+        author: 'Akhil',
+        url: 'asdfa.com',
+        likes: 11,
+      });
+      cy.createBlog({
+        title: 'Fourth blog',
+        author: 'Akhil',
+        url: 'asdfa.com',
+        likes: 21,
+      });
+      cy.get('.blog .details').children();
+    });
   });
 });

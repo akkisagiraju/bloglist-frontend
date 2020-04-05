@@ -13,6 +13,7 @@ const Blog = ({ blog, likeHandler, deleteBlog }) => {
   return (
     <>
       <div
+        className="blog"
         style={{ border: '1px solid black', paddingTop: 10, paddingLeft: 2 }}
       >
         <span className="info">
@@ -22,7 +23,7 @@ const Blog = ({ blog, likeHandler, deleteBlog }) => {
         <button onClick={() => deleteBlog(blog.id)}>Delete</button>
         <div className="details" style={showWhenvisible}>
           <div>
-            likes {blog.likes}
+            likes <span className="likes">{blog.likes}</span>
             <button onClick={clickLike}>like</button>
           </div>
           <div>url {blog.url}</div>
