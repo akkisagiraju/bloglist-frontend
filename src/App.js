@@ -13,6 +13,7 @@ const App = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -28,12 +29,20 @@ const App = () => {
 
   const onLogin = async (event) => {
     event.preventDefault();
-    const user = await loginService.login({ username, password });
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
-    blogService.setToken(user.token);
-    setUser(user);
-    setUsername('');
-    setPassword('');
+    try {
+      const user = await loginService.login({ username, password });
+      localStorage.setItem('loggedInUser', JSON.stringify(user));
+      blogService.setToken(user.token);
+      setUser(user);
+      setUsername('');
+      setPassword('');
+      setMessage('');
+    } catch (error) {
+      setUsername('');
+      setPassword('');
+      setUser(null);
+      setMessage('wrong credentials');
+    }
   };
 
   const logOut = () => {
@@ -64,7 +73,7 @@ const App = () => {
       <>
         <h2>blogs</h2>
         <p>
-          {user.username} is logged in <button onClick={logOut}>logout</button>
+          {user.name} is logged in <button onClick={logOut}>logout</button>
         </p>
         <Togglable label="new blog" items={blogs} ref={blogFormRef}>
           <BlogForm
@@ -83,13 +92,16 @@ const App = () => {
   }
 
   return (
-    <LoginForm
-      username={username}
-      password={password}
-      setUsername={setUsername}
-      setPassword={setPassword}
-      onLogin={onLogin}
-    />
+    <>
+      <LoginForm
+        username={username}
+        password={password}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        onLogin={onLogin}
+      />
+      {message ? <div>{message}</div> : null}
+    </>
   );
 };
 

@@ -10,10 +10,11 @@ const LoginForm = ({
   return (
     <div>
       <h2>log in to application</h2>
-      <form onSubmit={onLogin}>
+      <form id="login-form" onSubmit={onLogin}>
         <div>
           username
           <input
+            id="username"
             type="text"
             value={username}
             name="Username"
@@ -23,13 +24,16 @@ const LoginForm = ({
         <div>
           password
           <input
+            id="password"
             type="password"
             value={password}
             name="Password"
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button id="login-button" type="submit">
+          login
+        </button>
       </form>
     </div>
   );

@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'jest'],
+  extends: ['plugin:cypress/recommended'],
   rules: {
     indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
