@@ -26,4 +26,16 @@ describe('Blog app', () => {
       cy.contains('Akhil is logged in');
     });
   });
+
+  describe('When logged in', () => {
+    it('allows a user to create a blog', () => {
+      cy.login({ username: 'akki', password: '123456789' });
+      cy.contains('new blog').click();
+      cy.get('#title').type('First blog');
+      cy.get('#author').type('Akhil');
+      cy.get('#url').type('http://google.com/akki');
+      cy.get('#create').click();
+      cy.contains('First blog');
+    });
+  });
 });
