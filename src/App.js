@@ -67,9 +67,12 @@ const App = () => {
   };
 
   const deleteBlog = async (id) => {
-    await blogService.deleteBlog(id);
-    const updatedBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(updatedBlogs);
+    const confirm = window.confirm(`Do you want to delete blog ${id}?`);
+    if (confirm) {
+      await blogService.deleteBlog(id);
+      const updatedBlogs = blogs.filter((blog) => blog.id !== id);
+      setBlogs(updatedBlogs);
+    }
   };
 
   // 5.3

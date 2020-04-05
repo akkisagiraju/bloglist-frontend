@@ -19,7 +19,9 @@ const Blog = ({ blog, likeHandler, deleteBlog }) => {
         <span className="info">
           {blog.title} {blog.author}{' '}
         </span>
-        <button onClick={() => setViewDetails(!viewDetails)}>View</button>
+        <button onClick={() => setViewDetails(!viewDetails)}>
+          {viewDetails ? 'View' : 'Hide'}
+        </button>
         <button onClick={() => deleteBlog(blog.id)}>Delete</button>
         <div className="details" style={showWhenvisible}>
           <div>
