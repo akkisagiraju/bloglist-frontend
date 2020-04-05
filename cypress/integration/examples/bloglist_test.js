@@ -27,15 +27,28 @@ describe('Blog app', () => {
     });
   });
 
-  describe('When logged in', () => {
-    it('allows a user to create a blog', () => {
+  describe('When logged in a user can create a new blog', () => {
+    beforeEach(() => {
       cy.login({ username: 'akki', password: '123456789' });
+    });
+    it('allows a user to create a blog', () => {
       cy.contains('new blog').click();
       cy.get('#title').type('First blog');
       cy.get('#author').type('Akhil');
       cy.get('#url').type('http://google.com/akki');
       cy.get('#create').click();
       cy.contains('First blog');
+    });
+
+    it('allows a user to delete a blog created by the user', () => {
+      cy.contains('new blog').click();
+      cy.get('#title').type('First blog');
+      cy.get('#author').type('Akhil');
+      cy.get('#url').type('http://google.com/akki');
+      cy.get('#create').click();
+      cy.contains('First blog');
+      cy.contains('Delete').click();
+      cy.get('html').should('not.contain', 'First blog');
     });
   });
 });

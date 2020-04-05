@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Blog = ({ blog, likeHandler }) => {
+const Blog = ({ blog, likeHandler, deleteBlog }) => {
   const [viewDetails, setViewDetails] = useState(false);
 
   const showWhenvisible = { display: viewDetails ? '' : 'none' };
@@ -19,6 +19,7 @@ const Blog = ({ blog, likeHandler }) => {
           {blog.title} {blog.author}{' '}
         </span>
         <button onClick={() => setViewDetails(!viewDetails)}>View</button>
+        <button onClick={() => deleteBlog(blog.id)}>Delete</button>
         <div className="details" style={showWhenvisible}>
           <div>
             likes {blog.likes}

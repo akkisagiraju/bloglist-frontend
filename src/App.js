@@ -66,6 +66,12 @@ const App = () => {
     setUrl('');
   };
 
+  const deleteBlog = async (id) => {
+    await blogService.deleteBlog(id);
+    const updatedBlogs = blogs.filter((blog) => blog.id !== id);
+    setBlogs(updatedBlogs);
+  };
+
   // 5.3
 
   if (user !== null) {
@@ -75,7 +81,12 @@ const App = () => {
         <p>
           {user.name} is logged in <button onClick={logOut}>logout</button>
         </p>
-        <Togglable label="new blog" items={blogs} ref={blogFormRef}>
+        <Togglable
+          label="new blog"
+          items={blogs}
+          ref={blogFormRef}
+          deleteBlog={deleteBlog}
+        >
           <BlogForm
             blogs={blogs}
             title={title}
