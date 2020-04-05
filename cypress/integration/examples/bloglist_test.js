@@ -29,7 +29,7 @@ describe('Blog app', () => {
 
   describe('Successful login', () => {
     beforeEach(() => {
-      localStorage.removeItem('loggedInUser');
+      cy.clearLocalStorage();
       cy.login({ username: 'akki', password: '123456789' });
     });
     it('allows a user to create a blog', () => {
@@ -83,7 +83,10 @@ describe('Blog app', () => {
         url: 'asdfa.com',
         likes: 21,
       });
-      cy.get('.blog .details').children();
+      cy.get('.blog .details').should('have.length', 3);
+      //   cy.get('.likes').then(($el) => {
+      //     expect($el).to.eq($el);
+      //   });
     });
   });
 });
