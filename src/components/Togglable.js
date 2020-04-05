@@ -1,5 +1,6 @@
 import React, { useState, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
+import Blog from './Blog';
 
 const Togglable = React.forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
@@ -22,9 +23,7 @@ const Togglable = React.forwardRef((props, ref) => {
       <div style={hideWhenVisible}>
         <button onClick={toggleVisiblity}>{props.label}</button>
         {props.items.map((item) => (
-          <div key={item.id}>
-            {item.title} {item.author}
-          </div>
+          <Blog key={item.id} blog={item} />
         ))}
       </div>
       <div style={showWhenVisible}>
