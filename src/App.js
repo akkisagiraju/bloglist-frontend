@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Blog from './components/Blog';
+import LoginForm from './components/LoginForm';
+import BlogForm from './components/BlogForm';
 import loginService from './services/login';
 import blogService from './services/blogs';
+import Togglable from './components/Togglable';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -18,10 +20,11 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      console.log(user);
       blogService.setToken(user.token);
     }
   }, []);
+
+  const blogFormRef = React.createRef();
 
   const onLogin = async (event) => {
     event.preventDefault();
@@ -40,6 +43,7 @@ const App = () => {
 
   const onBlogAdd = async (e) => {
     e.preventDefault();
+    blogFormRef.current.toggleVisiblity();
     const newBlog = {
       title,
       author,
@@ -62,70 +66,30 @@ const App = () => {
         <p>
           {user.username} is logged in <button onClick={logOut}>logout</button>
         </p>
-        {blogs.map((blog) => (
-          <Blog key={blog.id} blog={blog} />
-        ))}
-
-        <h2>create new</h2>
-        <form onSubmit={onBlogAdd}>
-          <div>
-            title:
-            <input
-              type="text"
-              value={title}
-              name="Username"
-              onChange={(event) => setTitle(event.target.value)}
-            />
-          </div>
-          <div>
-            author:
-            <input
-              type="text"
-              value={author}
-              name="Author"
-              onChange={(event) => setAuthor(event.target.value)}
-            />
-          </div>
-          <div>
-            url:
-            <input
-              type="text"
-              value={url}
-              name="Url"
-              onChange={(event) => setUrl(event.target.value)}
-            />
-          </div>
-          <button type="submit">create</button>
-        </form>
+        <Togglable label="new blog" items={blogs} ref={blogFormRef}>
+          <BlogForm
+            blogs={blogs}
+            title={title}
+            author={author}
+            url={url}
+            setTitle={setTitle}
+            setAuthor={setAuthor}
+            setUrl={setUrl}
+            onBlogAdd={onBlogAdd}
+          />
+        </Togglable>
       </>
     );
   }
 
   return (
-    <div>
-      <h2>log in to application</h2>
-      <form onSubmit={onLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
+    <LoginForm
+      username={username}
+      password={password}
+      setUsername={setUsername}
+      setPassword={setPassword}
+      onLogin={onLogin}
+    />
   );
 };
 
